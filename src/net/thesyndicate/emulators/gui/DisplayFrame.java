@@ -4,9 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
-/**
- * Created by johlewis on 10/22/2014.
- */
 public class DisplayFrame extends JFrame {
 
     public DisplayFrame() {

@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class MenuBar extends JMenuBar implements ActionListener {
 
-    private JFrame frame;
+    private JFrame window;
     private JMenu screenSizeItem;
     private JMenuItem loadItem, resetItem, exitItem, saveStateItem, openStateItem, pickStateItem, inputItem, helpItem, aboutItem;
     private JRadioButtonMenuItem pauseItem, muteItem;
@@ -40,6 +40,10 @@ public class MenuBar extends JMenuBar implements ActionListener {
         keyBindings.put("0", new Object[]{"0", KeyEvent.VK_0});
         keyBindings.put("B", new Object[]{"B", KeyEvent.VK_B});
         keyBindings.put("F", new Object[]{"F", KeyEvent.VK_F});
+    }
+
+    public MenuBar(JFrame window) {
+        this.window = window;
     }
 
     @Override

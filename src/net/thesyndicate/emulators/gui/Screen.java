@@ -1,10 +1,15 @@
 package net.thesyndicate.emulators.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import net.thesyndicate.emulators.output.OutputController;
+
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class DisplayPanel extends JPanel {
+public class Screen extends JPanel implements OutputController {
 
     private static final Color DEFAULT_PIXEL_OFF_COLOR = Color.black;
     private static final Color DEFAULT_PIXEL_ON_COLOR = Color.white;
@@ -19,11 +24,11 @@ public class DisplayPanel extends JPanel {
     private BufferedImage image;
     private int scale;
 
-    public DisplayPanel() {
+    public Screen() {
         initDisplay(DEFAULT_SCALE);
     }
 
-    public DisplayPanel(int scale) {
+    public Screen(int scale) {
         initDisplay(scale);
     }
 
@@ -34,6 +39,7 @@ public class DisplayPanel extends JPanel {
         g.drawImage(image, 0, 0, null);
     }
 
+    @Override
     public void draw(boolean[][] data) {
         for(int i = 0; i < data.length; i++) {
             for(int j = 0; j < data[i].length; j++) {
@@ -48,6 +54,7 @@ public class DisplayPanel extends JPanel {
         repaint();
     }
 
+    @Override
     public void clear() {
         Graphics2D g = image.createGraphics();
         g.setColor(pixelOffColor);

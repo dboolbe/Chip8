@@ -23,7 +23,6 @@ public class Emulator {
     }
 
     private void init() {
-        window.init();
         cpu.init();
     }
 

@@ -45,10 +45,6 @@ public class Window extends JFrame {
         setVisible(true);
     }
 
-    public void init() {
-        cpu.init();
-    }
-
     public synchronized void draw(boolean[][] data) {
         screen.draw(data);
     }
@@ -63,6 +59,12 @@ public class Window extends JFrame {
     }
 
     public void loadROM(ROM rom) {
+        if(cpu == null) {
+            System.out.println("It appears that `cpu` is null.");
+            System.out.print("Will try to initialize now...");
+            cpu = emulator.getCpu();
+            System.out.println("done.");
+        }
         cpu.loadROM(rom);
     }
 

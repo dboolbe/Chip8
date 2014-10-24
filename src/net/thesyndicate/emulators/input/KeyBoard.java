@@ -70,7 +70,7 @@ public class KeyBoard implements InputController {
     }
 
     private void interacted(int val, boolean pushed) {
-        Integer b = buttonMapping.get(val);System.out.println("Val: " + val + " pushed: " + pushed + " b: '" + b + "'");
+        Integer b = buttonMapping.get(val);
         if(b != null)
             try {
                 cpu.keyInteracted(b, pushed);

@@ -1,14 +1,10 @@
 package net.thesyndicate.emulators;
 
-import net.thesyndicate.emulators.exception.InvalidKeyException;
-import net.thesyndicate.emulators.exception.ProgramCounterOutOfBoundsException;
-import net.thesyndicate.emulators.exception.RegisterOutOfBoundsException;
-import net.thesyndicate.emulators.exception.StackOverflowException;
-import net.thesyndicate.emulators.exception.UnknownOpcodeException;
+import net.thesyndicate.emulators.exception.*;
 import net.thesyndicate.emulators.input.ROM;
 import net.thesyndicate.emulators.output.Window;
 
-import java.awt.Toolkit;
+import java.awt.*;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Timer;
@@ -453,7 +449,7 @@ end = System.currentTimeMillis();
             }
         }System.out.println("destReg: " + destReg);
 
-        //if we had no key pressed, we decrement out pc which causes the instruction to repeat again
+        //if we had no key pressed, we decrement out pc which causes the instruction to repeat againtest
         programCounter -= 2;
     }
 

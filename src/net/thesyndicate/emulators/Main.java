@@ -1,6 +1,6 @@
 package net.thesyndicate.emulators;
 
-import net.thesyndicate.emulators.gui.Window;
+import net.thesyndicate.emulators.output.Window;
 
 public class Main {
 
@@ -11,9 +11,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, World!!");
 
-        Window frame = new Window();
-        frame.testScreen();
-        frame.testScreen();
-        frame.testScreen();
+        Emulator emulator = new Emulator();
+
+        System.out.println("DONE");
     }
 }

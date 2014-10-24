@@ -1,6 +1,4 @@
-package net.thesyndicate.emulators.gui;
-
-import net.thesyndicate.emulators.output.OutputController;
+package net.thesyndicate.emulators.output;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -51,7 +49,7 @@ public class Screen extends JPanel implements OutputController {
                 }
             }
         }
-        repaint();
+        repaint();System.out.println("Initializing the CPU ...");
     }
 
     @Override
@@ -61,6 +59,10 @@ public class Screen extends JPanel implements OutputController {
         g.fillRect(0, 0, image.getWidth(), image.getHeight());
 
         repaint();
+    }
+
+    public void setScale(int scale) {
+        initDisplay(scale);
     }
 
     private synchronized void initDisplay(int scale) {

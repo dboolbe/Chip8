@@ -1,4 +1,8 @@
-package net.thesyndicate.emulators.gui;
+package net.thesyndicate.emulators.output;
+
+import net.thesyndicate.emulators.CPU;
+import net.thesyndicate.emulators.Emulator;
+import net.thesyndicate.emulators.input.ROM;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -7,11 +11,16 @@ import java.util.Random;
 public class Window extends JFrame {
 
     private Screen screen;
+    private CPU cpu;
+    private Emulator emulator;
 
-    public Window() {
+    public Window(Emulator emulator) {
         super("Emulator");
 
+        this.emulator = emulator;
+
         initScreen();
+        initCPU(emulator);
         initMenuBar();
         initWindow();
     }
@@ -19,6 +28,10 @@ public class Window extends JFrame {
     private void initScreen() {
         screen = new Screen();
         add(screen);
+    }
+
+    private void initCPU(Emulator emulator) {
+        cpu = emulator.getCpu();
     }
 
     private void initMenuBar() {
@@ -32,12 +45,29 @@ public class Window extends JFrame {
         setVisible(true);
     }
 
+    public void init() {
+        cpu.init();
+    }
+
     public synchronized void draw(boolean[][] data) {
         screen.draw(data);
     }
 
     public synchronized void clear() {
         screen.clear();
+    }
+
+    public void setScale(int scale) {
+        screen.setScale(scale);
+        pack();
+    }
+
+    public void loadROM(ROM rom) {
+        cpu.loadROM(rom);
+    }
+
+    public void start() {
+        emulator.start();
     }
 
     public void testScreen() {
@@ -51,11 +81,5 @@ public class Window extends JFrame {
             for(int c = 0; c < testImage[r].length; c++)
                 testImage[r][c] = (random.nextInt(2) == 0);
         draw(testImage);
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -130,8 +130,14 @@ public class MenuBar extends JMenuBar implements ActionListener {
             window.start();
         } else if(o == pauseItem) {
             System.out.println("do Pause action");
+            if(pauseItem.isSelected()) {
+                window.pause();
+            } else {
+                window.resume();
+            }
         } else if(o == resetItem) {
             System.out.println("do Reset action");
+            window.reset();
         } else if(o == saveStateItem) {
             System.out.println("do Save State action");
         } else if(o == openStateItem) {
@@ -162,7 +168,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
                     int side = (4 * multipler);
                     System.out.println("Changing scale to x" + multipler + " which is " + side + "x" + side + ".");
                     window.setScale(side);
-                    window.testScreen();
+//                    window.testScreen();
                     break;
                 default:
                     System.out.println("Unimplemented Action: " + i);

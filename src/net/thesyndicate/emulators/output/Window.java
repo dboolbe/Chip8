@@ -68,6 +68,18 @@ public class Window extends JFrame {
         cpu.loadROM(rom);
     }
 
+    public void reset() {
+        emulator.reset();
+    }
+
+    public void pause() {
+        emulator.pause();
+    }
+
+    public void resume() {
+        emulator.resume();
+    }
+
     public void start() {
         emulator.start();
     }

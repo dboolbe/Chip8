@@ -38,7 +38,7 @@ public class Screen extends JPanel implements OutputController {
     }
 
     @Override
-    public void draw(boolean[][] data) {
+    synchronized public void draw(boolean[][] data) {
         for(int i = 0; i < data.length; i++) {
             for(int j = 0; j < data[i].length; j++) {
                 for(int x = i * scale; x < i * scale + scale; x++) {
@@ -49,7 +49,7 @@ public class Screen extends JPanel implements OutputController {
                 }
             }
         }
-        repaint();System.out.println("Initializing the CPU ...");
+        repaint();
     }
 
     @Override

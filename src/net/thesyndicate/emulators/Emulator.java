@@ -26,6 +26,20 @@ public class Emulator {
         cpu.init();
     }
 
+    public void reset() {
+        cpu.pause();
+        cpu.reset();
+        cpu.resume();
+    }
+
+    public void pause() {
+        cpu.pause();
+    }
+
+    public void resume() {
+        cpu.resume();
+    }
+
     public void start() {
         (new Thread(cpu)).start();
     }

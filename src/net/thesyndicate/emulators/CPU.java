@@ -86,7 +86,7 @@ public class CPU implements Runnable {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                if(isPaused) {
+                if(!isPaused) {
                     if(soundTimer == 0)
                         Toolkit.getDefaultToolkit().beep();
                     delayTimer = Math.max(delayTimer - 1, -1);
@@ -95,7 +95,7 @@ public class CPU implements Runnable {
             }
         };
 
-        timer.schedule(task, 0, Math.round(1000.0 / 60.0));
+        timer.schedule(task, 0, Math.round(1000.0 / 600.0));
 
         initialize();
     }
@@ -128,6 +128,27 @@ public class CPU implements Runnable {
             memory[i] = font[i] & 0xFF;
     }
 
+    public void reset() {
+        // initialize memory and registers
+        Arrays.fill(register, 0);
+        Arrays.fill(stack, 0);
+
+        for(int i = 0; i < pixels.length; i++)
+            Arrays.fill(pixels[i], false);
+        Arrays.fill(keys, false);
+
+        drawFlag = false;
+
+        indexRegister = 0;
+        programCounter = 0x200;
+        stackPointer = 0;
+
+        delayTimer = 0;
+        soundTimer = 0;
+
+        clearScreen();
+    }
+
     public void loadROM(ROM rom) {
         // load ROM data into memory
         ByteBuffer buffer = rom.getBuffer();
@@ -139,9 +160,11 @@ public class CPU implements Runnable {
 
     @Override
     public void run() {
+long start, end = 0L;
         if(!isRomLoaded)
             throw new NullPointerException("No ROM has been loaded.");
         while(isRunning) {
+start = System.currentTimeMillis();
             // execution cycle
             try {
                 executionCycle();
@@ -153,12 +176,18 @@ public class CPU implements Runnable {
                 e.printStackTrace();
             } catch (RegisterOutOfBoundsException e) {
                 e.printStackTrace();
-            }System.out.println("Initializing the CPU ..." + drawFlag + "dsafsda" + (window != null));
+            }
 
             // draw cycle
-            if(drawFlag && window != null) { System.out.println("Initializing the CPU ...");
+            if(drawFlag && window != null) {
                 window.draw(pixels);}
-
+end = System.currentTimeMillis();
+//if(end - start < (1000 / 480))
+//    try {
+//        Thread.sleep((1000 / 480) - (end - start));
+//    } catch (InterruptedException e) {
+//        e.printStackTrace();
+//    }
             // loop to simulate a pause
             pauseLoop();
         }
@@ -422,7 +451,7 @@ public class CPU implements Runnable {
                 register[destReg] = 1 << i;
                 return;
             }
-        }
+        }System.out.println("destReg: " + destReg);
 
         //if we had no key pressed, we decrement out pc which causes the instruction to repeat again
         programCounter -= 2;

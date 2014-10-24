@@ -53,13 +53,11 @@ public class KeyBoard implements InputController {
 
     @Override
     public void setButtonMapping(int code, int position) {
-        buttonMapping.put(position, code);
+        buttonMapping.put(code, position);
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
+    public void keyTyped(KeyEvent e) { }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -72,7 +70,7 @@ public class KeyBoard implements InputController {
     }
 
     private void interacted(int val, boolean pushed) {
-        Integer b = buttonMapping.get(val);
+        Integer b = buttonMapping.get(val);System.out.println("Val: " + val + " pushed: " + pushed + " b: '" + b + "'");
         if(b != null)
             try {
                 cpu.keyInteracted(b, pushed);

@@ -2,9 +2,11 @@ package net.thesyndicate.emulators.output;
 
 import net.thesyndicate.emulators.CPU;
 import net.thesyndicate.emulators.Emulator;
+import net.thesyndicate.emulators.Memory;
 import net.thesyndicate.emulators.input.ROM;
 
 import javax.swing.*;
+import java.io.*;
 import java.util.Random;
 
 public class Window extends JFrame {
@@ -90,6 +92,36 @@ public class Window extends JFrame {
 
     public void start() {
         emulator.start();
+    }
+
+    public void saveState() {
+        try {
+            FileOutputStream fout = new FileOutputStream("window_test.txt");
+            ObjectOutputStream oos = new ObjectOutputStream(fout);
+            oos.writeObject(cpu.createMemoryState());
+            oos.close();
+            System.out.println("Done saving state");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadState() {
+        try {
+            FileInputStream fin = new FileInputStream("window_test.txt");
+            ObjectInputStream ois = new ObjectInputStream(fin);
+            cpu.loadMemoryState((Memory)ois.readObject());
+            ois.close();
+            System.out.println("Done loading state");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void testScreen() {

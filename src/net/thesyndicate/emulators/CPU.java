@@ -41,6 +41,8 @@ public class CPU implements Runnable {
     private int delayTimer;
     private int soundTimer;
 
+    private String hashString;
+
     private Emulator emulator;
     private Window window;
 
@@ -146,6 +148,9 @@ public class CPU implements Runnable {
     }
 
     public void loadROM(ROM rom) {
+        // get the ROM file hash
+        hashString = rom.generateMD5();
+
         // load ROM data into memory
         ByteBuffer buffer = rom.getBuffer();
         for(int i = 0; i < buffer.limit(); i++)
@@ -461,5 +466,45 @@ public class CPU implements Runnable {
             Arrays.fill(pixels[i], false);
 
         drawFlag = true;
+    }
+
+    public Memory createMemoryState() {
+        Memory memoryState = new Memory();
+
+        memoryState.setPixels(pixels);
+        memoryState.setKeys(keys);
+        memoryState.setMemory(memory);
+        memoryState.setRegister(register);
+        memoryState.setStack(stack);
+        memoryState.setDrawFlag(drawFlag);
+        memoryState.setRomLoaded(isRomLoaded);
+        memoryState.setRunning(isRunning);
+        memoryState.setPaused(isPaused);
+        memoryState.setProgramCounter(programCounter);
+        memoryState.setStackPointer(stackPointer);
+        memoryState.setIndexRegister(indexRegister);
+        memoryState.setDelayTimer(delayTimer);
+        memoryState.setSoundTimer(soundTimer);
+        memoryState.setHashString(hashString);
+
+        return memoryState;
+    }
+
+    public void loadMemoryState(Memory memoryState) {
+        pixels = memoryState.getPixels();
+        keys = memoryState.getKeys();
+        memory = memoryState.getMemory();
+        register = memoryState.getRegister();
+        stack = memoryState.getStack();
+        drawFlag = memoryState.getDrawFlag();
+        isRomLoaded = memoryState.getRomLoaded();
+        isRunning = memoryState.getRunning();
+        isPaused = memoryState.getPaused();
+        programCounter = memoryState.getProgramCounter();
+        stackPointer = memoryState.getStackPointer();
+        indexRegister = memoryState.getIndexRegister();
+        delayTimer = memoryState.getDelayTimer();
+        soundTimer = memoryState.getSoundTimer();
+        hashString = memoryState.getHashString();
     }
 }

@@ -141,8 +141,10 @@ public class MenuBar extends JMenuBar implements ActionListener {
             window.reset();
         } else if(o == saveStateItem) {
             System.out.println("do Save State action");
+            window.saveState();
         } else if(o == openStateItem) {
             System.out.println("do Open State action");
+            window.loadState();
         } else if(o == pickStateItem) {
             System.out.println("do Pick State action");
         } else if(o == inputItem) {

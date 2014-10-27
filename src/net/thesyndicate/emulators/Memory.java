@@ -22,6 +22,8 @@ public class Memory implements Serializable {
     private int delayTimer;
     private int soundTimer;
 
+    private String hashString;
+
     public void setPixels(boolean[][] pixels) {
         this.pixels = pixels;
     }
@@ -66,7 +68,7 @@ public class Memory implements Serializable {
         this.drawFlag = drawFlag;
     }
 
-    public boolean isDrawFlag() {
+    public boolean getDrawFlag() {
         return drawFlag;
     }
 
@@ -74,7 +76,7 @@ public class Memory implements Serializable {
         this.isRomLoaded = isRomLoaded;
     }
 
-    public boolean isRomLoaded() {
+    public boolean getRomLoaded() {
         return isRomLoaded;
     }
 
@@ -82,7 +84,7 @@ public class Memory implements Serializable {
         this.isRunning = isRunning;
     }
 
-    public boolean isRunning() {
+    public boolean getRunning() {
         return isRunning;
     }
 
@@ -90,7 +92,7 @@ public class Memory implements Serializable {
         this.isPaused = isPaused;
     }
 
-    public boolean isPaused() {
+    public boolean getPaused() {
         return isPaused;
     }
 
@@ -134,6 +136,14 @@ public class Memory implements Serializable {
         return soundTimer;
     }
 
+    public void setHashString(String hashString) {
+        this.hashString = hashString;
+    }
+
+    public String getHashString() {
+        return hashString;
+    }
+
     @Override
     public String toString() {
         return new StringBuffer(" pixels: ")
@@ -163,6 +173,8 @@ public class Memory implements Serializable {
                 .append(" delayTimer ")
                 .append(delayTimer)
                 .append(" soundTimer ")
-                .append(soundTimer).toString();
+                .append(soundTimer)
+                .append(" hashString ")
+                .append(hashString).toString();
     }
 }

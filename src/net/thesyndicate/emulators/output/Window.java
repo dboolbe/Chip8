@@ -4,18 +4,19 @@ import net.thesyndicate.emulators.CPU;
 import net.thesyndicate.emulators.Emulator;
 import net.thesyndicate.emulators.input.ROM;
 
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import java.util.Random;
 
 public class Window extends JFrame {
+
+    private static final String title = "Emulator";
 
     private Screen screen;
     private CPU cpu;
     private Emulator emulator;
 
     public Window(Emulator emulator) {
-        super("Emulator");
+        super(title);
 
         this.emulator = emulator;
 
@@ -65,6 +66,13 @@ public class Window extends JFrame {
             cpu = emulator.getCpu();
             System.out.println("done.");
         }
+
+        System.out.println("MD5: " + rom.generateMD5());
+        System.out.println("SHA-1: " + rom.generateSHA1());
+        System.out.println("SHA-256: " + rom.generateSHA256());
+        System.out.println("File.getFileName(): " + rom.getFileName());
+        setTitle(String.format("%s: %s", title, rom.getFileName()));
+
         cpu.loadROM(rom);
     }
 

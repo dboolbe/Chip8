@@ -8,6 +8,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class ROM {
 
@@ -15,11 +17,10 @@ public class ROM {
     private String fileName;
 
     private ROM(String fileName) {
-        this.fileName = fileName;
-
         buffer = ByteBuffer.allocate(4096);
         try {
             File file = new File(fileName);
+            this.fileName = file.getName();
             if(!file.isFile())
                 throw new InvalidFilePathException("Not a valid file name: " + fileName);
 
@@ -57,5 +58,71 @@ public class ROM {
         buffer.rewind();
         clone.flip();
         return clone;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    /***
+     * Generic hash string generating method.
+     * Citation: http://www.codejava.net/coding/how-to-calculate-md5-and-sha-hash-values-in-java
+     * @param algorithm the algorithm used to create the hash
+     * @return hash string
+     */
+    private String hashString(String algorithm) {
+        byte[] hashedBytes = null;
+
+        try {
+            MessageDigest digest = MessageDigest.getInstance(algorithm);
+            hashedBytes = digest.digest(buffer.array());
+
+            return convertByteArrayToHexString(hashedBytes);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return convertByteArrayToHexString(hashedBytes);
+    }
+
+    /***
+     * Convert ByteArray into a Hex String.
+     * Citation: http://www.codejava.net/coding/how-to-calculate-md5-and-sha-hash-values-in-java
+     * @param arrayBytes array of byte values
+     * @return hex string
+     */
+    private String convertByteArrayToHexString(byte[] arrayBytes) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for(int i = 0; i < arrayBytes.length; i++) {
+            stringBuffer.append(Integer.toString((arrayBytes[i] & 0xFF) + 0x100, 16).substring(1));
+        }
+        return stringBuffer.toString();
+    }
+
+    /***
+     * Generates a MD5 hash string of the ROM data
+     * Citation: http://www.codejava.net/coding/how-to-calculate-md5-and-sha-hash-values-in-java
+     * @return MD5 hash string
+     */
+    public String generateMD5() {
+        return hashString("MD5");
+    }
+
+    /***
+     * Generates a SHA-1 hash string of the ROM data
+     * Citation: http://www.codejava.net/coding/how-to-calculate-md5-and-sha-hash-values-in-java
+     * @return SHA-1 hash string
+     */
+    public String generateSHA1() {
+        return hashString("SHA-1");
+    }
+
+    /***
+     * Generates a SHA-256 hash string of the ROM data
+     * Citation: http://www.codejava.net/coding/how-to-calculate-md5-and-sha-hash-values-in-java
+     * @return SHA-256 hash string
+     */
+    public String generateSHA256() {
+        return hashString("SHA-256");
     }
 }

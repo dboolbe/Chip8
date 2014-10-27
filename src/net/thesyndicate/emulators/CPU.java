@@ -156,11 +156,9 @@ public class CPU implements Runnable {
 
     @Override
     public void run() {
-long start, end = 0L;
         if(!isRomLoaded)
             throw new NullPointerException("No ROM has been loaded.");
         while(isRunning) {
-start = System.currentTimeMillis();
             // execution cycle
             try {
                 executionCycle();
@@ -177,13 +175,7 @@ start = System.currentTimeMillis();
             // draw cycle
             if(drawFlag && window != null) {
                 window.draw(pixels);}
-end = System.currentTimeMillis();
-//if(end - start < (1000 / 480))
-//    try {
-//        Thread.sleep((1000 / 480) - (end - start));
-//    } catch (InterruptedException e) {
-//        e.printStackTrace();
-//    }
+
             // loop to simulate a pause
             pauseLoop();
         }

@@ -129,10 +129,11 @@ public class MenuBar extends JMenuBar implements ActionListener {
             window.loadROM(ROM.createROM(file.getAbsolutePath()));
             window.start();
         } else if(o == pauseItem) {
-            System.out.println("do Pause action");
             if(pauseItem.isSelected()) {
+                System.out.println("do Pause action");
                 window.pause();
             } else {
+                System.out.println("do Resume action");
                 window.resume();
             }
         } else if(o == resetItem) {
@@ -146,8 +147,8 @@ public class MenuBar extends JMenuBar implements ActionListener {
             System.out.println("do Pick State action");
         } else if(o == inputItem) {
             System.out.println("do Input action");
-        } else if(o == screenSizeItem) {
-            System.out.println("do Screen Size action");
+//        } else if(o == screenSizeItem) {
+//            System.out.println("do Screen Size action");
         } else if(o == muteItem) {
             System.out.println("do Mute action");
         } else if(o == helpItem) {
@@ -156,6 +157,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
             System.out.println("do About action");
         } else if(o == exitItem) {
             System.out.println("do Exit action");
+            System.exit(0);
         } else if(o instanceof JRadioButtonMenuItem) {
             int i = scaleButtons.indexOf(o);
             if(i != -1) System.out.println("do x" + (int)Math.pow(2, i) + " action");
@@ -168,7 +170,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
                     int side = (4 * multipler);
                     System.out.println("Changing scale to x" + multipler + " which is " + side + "x" + side + ".");
                     window.setScale(side);
-//                    window.testScreen();
+                    window.testScreen();
                     break;
                 default:
                     System.out.println("Unimplemented Action: " + i);

@@ -1,10 +1,7 @@
 package net.thesyndicate.emulators.output;
 
-import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Screen extends JPanel implements OutputController {
@@ -39,16 +36,26 @@ public class Screen extends JPanel implements OutputController {
 
     @Override
     synchronized public void draw(boolean[][] data) {
+        long start = System.currentTimeMillis();
+        Graphics g = image.getGraphics();
         for(int i = 0; i < data.length; i++) {
             for(int j = 0; j < data[i].length; j++) {
-                for(int x = i * scale; x < i * scale + scale; x++) {
-                    for(int y = j * scale; y < j * scale + scale; y++) {
-                        Color c = data[i][j] ? pixelOnColor : pixelOffColor;
-                        image.setRGB(x, y, c.getRGB());
-                    }
-                }
+                g.setColor(data[i][j] ? pixelOnColor : pixelOffColor);
+                g.fillRect(i * scale, j * scale, scale, scale);
             }
         }
+        repaint();
+
+        long end = System.currentTimeMillis();
+        // needed to slow down the frames to keep up with the keystrokes
+        if(end - start < (1000 / 60))
+        try {
+            Thread.sleep((1000 / 60) - (end - start));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // called repaint to allow the pack command to work
         repaint();
     }
 
